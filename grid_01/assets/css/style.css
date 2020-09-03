@@ -1,0 +1,24 @@
+table{
+    border: 2px solid #ccc;
+    margin: 0 auto;
+    background-color: transparent;
+    padding: 20px;
+}
+tr:hover{
+    background-color: rgba(0,0,0,.05);
+}
+input{
+    background: transparent;
+    border: 0;
+}
+input:focus{
+    outline: none;
+    border-bottom: 2px solid red;
+}
+table td, table th {
+    padding: .75rem;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
+
+}
