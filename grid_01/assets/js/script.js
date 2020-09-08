@@ -98,11 +98,22 @@ let displayData = () => {
 const getUpadtedValue = (event) => {
     const getRow = event.currentTarget.parentElement.parentElement.getAttribute('id');
     let currentElement = document.querySelectorAll(`#${getRow} input`);
-    
+    let updateObj = [];
     currentElement.forEach((item, index) => {
-        console.log(item.value);
-    
+        // console.log(item.value);
+        updateObj[index] = item.value
     });
+    let myObj = {
+        'order_ID':updateObj[0],
+        'customer_ID':updateObj[1],
+        'price':updateObj[2],
+        'ship_country': updateObj[3]
+    }
+
+    let index = parseInt(updateObj[0]) - 1;
+    
+    Object.assign(allDataInfo[index],myObj);
+    console.log(allDataInfo);
 }
 
 displayData();
