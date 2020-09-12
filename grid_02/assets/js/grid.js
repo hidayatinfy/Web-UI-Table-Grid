@@ -120,7 +120,7 @@ let sort1 = (property,order) => {
 }
 
 let displayForm = () => {
-    document.getElementById("addNewData").style.display ="block";
+    createForm();
 }
 
 let saveFormData = () => {
@@ -128,16 +128,67 @@ let saveFormData = () => {
     let customer_name = document.getElementById('customer_name1').value;
     let price = document.getElementById("price1").value;
 
-    let newObj = {
-        'order_id': order_id,
-        'customer_name':customer_name,
-        'price':price
+    if(order_id != "" && customer_name != "" && price != ""){
+        let newObj = {
+            'order_id': order_id,
+            'customer_name':customer_name,
+            'price':price
+        }
+        orderData.push(newObj);
+        document.getElementById("addNewData").style.display ="none";
+        document.getElementById('tbody').innerHTML = "";
+        displayGrid();
+    }else{
+        alert("Please enter all data");
     }
-    orderData.push(newObj);
-    document.getElementById("addNewData").style.display ="none";
-    document.getElementById('tbody').innerHTML = "";
-    displayGrid();
 }
+
+let createForm = () => {
+    document.getElementById('addNewForm').innerHTML = "";
+    
+    let iDiv = document.createElement('div');
+    setAttributes(iDiv, {"id": "addNewData"});
+    document.getElementById('addNewForm').appendChild(iDiv);
+
+    let heading = document.createElement('h4');
+    heading.innerHTML = "Add New Data";
+    iDiv.appendChild(heading);
+
+    let sOrderIdDiv = document.createElement('div');
+    setAttributes(sOrderIdDiv, {"class": "form-group"});
+    iDiv.appendChild(sOrderIdDiv);
+
+    let sOrderIdLable = document.createElement('label');
+    sOrderIdLable.innerHTML = "Enter Order Id:";
+    sOrderIdDiv.appendChild(sOrderIdLable);
+
+    let sOrderIdInput = document.createElement('input');
+    setAttributes(sOrderIdInput,{'class':'form-control','id':'order_id1'});
+    sOrderIdDiv.appendChild(sOrderIdInput);
+
+    let sCustomerNameLable = document.createElement('label');
+    sCustomerNameLable.innerHTML = "Enter Customer Name:";
+    sOrderIdDiv.appendChild(sCustomerNameLable);
+
+    let sCustomerNameInput = document.createElement('input');
+    setAttributes(sCustomerNameInput,{'class':'form-control','id':'customer_name1'});
+    sOrderIdDiv.appendChild(sCustomerNameInput);
+
+    let sPriceLable = document.createElement('label');
+    sPriceLable.innerHTML = "Enter Price:";
+    sOrderIdDiv.appendChild(sPriceLable);
+
+    let sPriceInput = document.createElement('input');
+    setAttributes(sPriceInput,{'class':'form-control','id':'price1'});
+    sOrderIdDiv.appendChild(sPriceInput);
+
+    let saveanchor = document.createElement('a');
+    setAttributes(saveanchor, {"class": "btn btn-primary","onclick":"saveFormData()"});
+    saveanchor.innerHTML = "Save";
+    iDiv.appendChild(saveanchor);
+}
+
+
 
 
 
