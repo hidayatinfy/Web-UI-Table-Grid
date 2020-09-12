@@ -2,25 +2,24 @@ let orderData = [
     {
         "order_id" : "109",
         "customer_name":"John Deo",
-        "price":"674"
+        "price":"123"
     },
     {
         "order_id" : "102",
         "customer_name":"Kedar",
-        "price":"9876"
+        "price":"234"
     },
     {
         "order_id" : "103",
         "customer_name":"Sachin",
-        "price":"2345"
+        "price":"354"
     },
     {
         "order_id" : "104",
         "customer_name":"Sourabh",
-        "price":"976"
+        "price":"456"
     }
 ];
-
 
 let setAttributes = (element,attribute) => {
     for(let key in attribute) {
@@ -106,18 +105,38 @@ let sort1 = (property,order) => {
     if(order === "asc"){
         newOrder = "desc";
         document.getElementById(property).classList.remove("asc");
-        document.getElementById(property).classList.add("desc");
+        document.getElementById(property).classList.add(newOrder);
     }else{
         newOrder = "asc";
         document.getElementById(property).classList.remove("desc");
-        document.getElementById(property).classList.add("asc");
+        document.getElementById(property).classList.add(newOrder);
     }
     document.getElementById(property).setAttribute('onclick','sort1(\''+property+'\',\''+newOrder+'\')');
+
     orderData.sort(sort(property,order));
 
     document.getElementById('tbody').innerHTML = "";
     displayGrid();
+}
 
+let displayForm = () => {
+    document.getElementById("addNewData").style.display ="block";
+}
+
+let saveFormData = () => {
+    let order_id = document.getElementById('order_id1').value;
+    let customer_name = document.getElementById('customer_name1').value;
+    let price = document.getElementById("price1").value;
+
+    let newObj = {
+        'order_id': order_id,
+        'customer_name':customer_name,
+        'price':price
+    }
+    orderData.push(newObj);
+    document.getElementById("addNewData").style.display ="none";
+    document.getElementById('tbody').innerHTML = "";
+    displayGrid();
 }
 
 
