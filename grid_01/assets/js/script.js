@@ -25,10 +25,8 @@ const allDataInfo = [
     }
 ]
 
-/*
-    Function :  setAttributes()
-    Purpose: this helper is used to set attribute which is needed to create dynamic html
-*/
+//contenteditable="true"
+
 let setAttributes = (element,attribute) => {
     for(let key in attribute) {
         element.setAttribute(key, attribute[key]);
@@ -38,45 +36,55 @@ let setAttributes = (element,attribute) => {
 let tableBody = document.querySelector('.tbody');
 
 const singleRowUi = (data, index) =>{
+
+    // our tr
     let mainRow = document.createElement('tr');
-    setAttributes(mainRow,{'class':'main_row'});
+    setAttributes(mainRow,{'class':'main_row', 'id' : `data-row-${index + 1}`, 'data-index': index});
 
+    // td first 
     let orderIdWrap = document.createElement('td');
-    setAttributes(orderIdWrap,{'class':'order_id_wrap'});
-
-    let orderIdInput = document.createElement('input');
-    setAttributes(orderIdInput,{'class':'order_id_input'});
-    orderIdInput.value = data.order_ID;
-
-    let customerIdWrap = document.createElement('td');
-    setAttributes(customerIdWrap,{'class':'customer_id_wrap'});
-
-    let customerIdInput = document.createElement('input');
-    setAttributes(customerIdInput,{'class':'customer_id_input', 'value' : data.customer_ID});
-    customerIdInput.value = data.customer_ID;
-
-    let priceWrap = document.createElement('td');
-    setAttributes(priceWrap,{'class':'price_wrap'});
-
-    let priceInput = document.createElement('input');
-    setAttributes(priceInput,{'class':'price_input', 'value' : data.price});
-    priceInput.value = data.price;
-
-    let shipCountryWrap = document.createElement('td');
-    setAttributes(shipCountryWrap,{'class':'ship_country_wrap'});
-
-    let shipCountryInput = document.createElement('input');
-    setAttributes(shipCountryInput,{'class':'ship_country_input', 'value' : data.ship_country});
-    shipCountryInput.value = data.ship_country;
-
+    setAttributes(orderIdWrap,{'class':'order_id_wrap td_wrap'});
     mainRow.appendChild(orderIdWrap);
+
+    // input field
+    let orderIdInput = document.createElement('input');
+    setAttributes(orderIdInput,{'class':'order_id_input input_wrap','onfocusout' : 'getUpadtedValue(event)', 'name':'order_ID'});
+    orderIdInput.value = data.order_ID;
     orderIdWrap.appendChild(orderIdInput);
+
+    // td second
+    let customerIdWrap = document.createElement('td');
+    setAttributes(customerIdWrap,{'class':'customer_id_wrap td_wrap'});
     mainRow.appendChild(customerIdWrap);
+
+    // second td input
+    let customerIdInput = document.createElement('input');
+    setAttributes(customerIdInput,{'class':'customer_id_input input_wrap', 'onfocusout' : 'getUpadtedValue(event)', 'name':'customer_ID'});
+    customerIdInput.value = data.customer_ID;
     customerIdWrap.appendChild(customerIdInput);
+
+    // td third
+    let priceWrap = document.createElement('td');
+    setAttributes(priceWrap,{'class':'price_wrap td_wrap'});
     mainRow.appendChild(priceWrap);
+
+    // third td input 
+    let priceInput = document.createElement('input');
+    setAttributes(priceInput,{'class':'price_input input_wrap', 'onfocusout' : 'getUpadtedValue(event)', 'name':'price'});
+    priceInput.value = data.price;
     priceWrap.appendChild(priceInput);
+
+    // forth td
+    let shipCountryWrap = document.createElement('td');
+    setAttributes(shipCountryWrap,{'class':'ship_country_wrap td_wrap'});
     mainRow.appendChild(shipCountryWrap);
+
+    // forth td input 
+    let shipCountryInput = document.createElement('input');
+    setAttributes(shipCountryInput,{'class':'ship_country_input input_wrap', 'value' : data.ship_country , 'onfocusout' : 'getUpadtedValue(event)', 'name':'ship_country'});
+    shipCountryInput.value = data.ship_country;
     shipCountryWrap.appendChild(shipCountryInput);
+
 
     tableBody.appendChild(mainRow);
 
@@ -87,5 +95,28 @@ let displayData = () => {
         singleRowUi(data,index);
     });
 }
+const getUpadtedValue = (event) => {
+    const getRow = event.currentTarget.parentElement.parentElement.getAttribute('id');
+    let currentElement = document.querySelectorAll(`#${getRow} input`);
+    let updateObj = [];
+    currentElement.forEach((item, index) => {
+        // console.log(item.value);
+        updateObj[index] = item.value
+    });
+    let myObj = {
+        'order_ID':updateObj[0],
+        'customer_ID':updateObj[1],
+        'price':updateObj[2],
+        'ship_country': updateObj[3]
+    }
+
+    let index = parseInt(updateObj[0]) - 1;
+    
+    Object.assign(allDataInfo[index],myObj);
+    console.log(allDataInfo);
+}
 
 displayData();
+
+
+
