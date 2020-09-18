@@ -59,6 +59,13 @@ let createUi = (data,index) => {
     setAttributes(priceInput,{'class':"test","onblur":'updateData('+ index + ',\''+ data.order_id +'\',\''+data.customer_name+'\',this.value)'});
     priceInput.value = data.price;
     tbld2.appendChild(priceInput);
+
+    let tbld3 = document.createElement('td');
+    tblRow.appendChild(tbld3);
+    let deleteIcon = document.createElement("i");
+    setAttributes(deleteIcon,{'class':"fa fa-trash-o","onclick":'deleteData('+ index + ')'});
+    tbld3.appendChild(deleteIcon);
+    
 }
 
 let displayGrid = () => {
@@ -134,6 +141,7 @@ let saveFormData = () => {
             'customer_name':customer_name,
             'price':price
         }
+        //console.log(orderData);
         orderData.push(newObj);
         document.getElementById("addNewData").style.display ="none";
         document.getElementById('tbody').innerHTML = "";
@@ -186,6 +194,12 @@ let createForm = () => {
     setAttributes(saveanchor, {"class": "btn btn-primary","onclick":"saveFormData()"});
     saveanchor.innerHTML = "Save";
     iDiv.appendChild(saveanchor);
+}
+
+let deleteData = (index) => {
+    orderData.splice(index,1);
+    document.getElementById('tbody').innerHTML = "";
+    displayGrid();
 }
 
 
