@@ -91,7 +91,14 @@ let updateData = (index,order_id,customer_name,price) => {
     displayGrid();
 }
 
+let currentSortingState = {
+    "property":"order_id",
+    "order":"asc"
+}
+
 let sort = (property,order) => {
+    currentSortingState['property'] = property;
+    currentSortingState['order'] = order;
     let sort_order = 1;
     if(order === "desc"){
         sort_order = -1;
@@ -141,11 +148,15 @@ let saveFormData = () => {
             'customer_name':customer_name,
             'price':price
         }
-        //console.log(orderData);
+        
         orderData.push(newObj);
+        
         document.getElementById("addNewData").style.display ="none";
+
+        orderData.sort(sort(currentSortingState['property'],currentSortingState['order']));
         document.getElementById('tbody').innerHTML = "";
         displayGrid();
+     
     }else{
         alert("Please enter all data");
     }
